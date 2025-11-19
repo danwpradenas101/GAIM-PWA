@@ -14,17 +14,62 @@ import './App.css'
 type AppScreen = 'welcome' | 'main' | 'beats' | 'config'
 
 function AppContent() {
-    const [screen, setScreen] = useState<AppScreen>('welcome')
+    const [screen, setScreen] = useState<AppScreen>(() => {
+        try {
+            const saved = localStorage.getItem('gaim-screen')
+            if (saved && ['welcome', 'main', 'beats', 'config'].includes(saved)) {
+                return saved as AppScreen
+            }
+        } catch (e) { /* ignore */ }
+        return 'welcome'
+    })
     const [config, setConfig] = useState<GAIMConfig>(DEFAULT_CONFIG)
-    const [currentIdea, setCurrentIdea] = useState<CompositionIdea | null>(null)
+    const [currentIdea, setCurrentIdea] = useState<CompositionIdea | null>(() => {
+        try {
+            const saved = localStorage.getItem('gaim-current-idea')
+            return saved ? JSON.parse(saved) : null
+        } catch (e) {
+            return null
+        }
+    })
     const [currentPattern, setCurrentPattern] = useState<RhythmPattern | null>(null)
-    const [selectedParams, setSelectedParams] = useState<Record<string, boolean>>({})
+    const [selectedParams, setSelectedParams] = useState<Record<string, boolean>>(() => {
+        try {
+            const saved = localStorage.getItem('gaim-selected-params')
+            return saved ? JSON.parse(saved) : {}
+        } catch (e) {
+            return {}
+        }
+    })
     const { t, translateConfig, lang, setLang } = useTranslation()
     const displayedConfig = translateConfig(config)
 
     useEffect(() => {
         loadConfig()
     }, [])
+
+    // Persist state changes
+    useEffect(() => {
+        try {
+            localStorage.setItem('gaim-screen', screen)
+        } catch (e) { /* ignore */ }
+    }, [screen])
+
+    useEffect(() => {
+        try {
+            if (currentIdea) {
+                localStorage.setItem('gaim-current-idea', JSON.stringify(currentIdea))
+            } else {
+                localStorage.removeItem('gaim-current-idea')
+            }
+        } catch (e) { /* ignore */ }
+    }, [currentIdea])
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('gaim-selected-params', JSON.stringify(selectedParams))
+        } catch (e) { /* ignore */ }
+    }, [selectedParams])
 
     const loadConfig = async () => {
         const saved = await getConfig()
@@ -38,6 +83,16 @@ function AppContent() {
     const handleWelcomeNext = () => {
         generateNewIdea()
         setScreen('main')
+    }
+
+    const handleResetToWelcome = () => {
+        setScreen('welcome')
+        setCurrentIdea(null)
+        setCurrentPattern(null)
+        try {
+            localStorage.removeItem('gaim-current-idea')
+            localStorage.removeItem('gaim-selected-params')
+        } catch (e) { /* ignore */ }
     }
 
     const generateNewIdea = () => {
@@ -196,7 +251,7 @@ ${currentIdea.pitches.join(', ')}`
                     <button className="new-btn" onClick={generateNewIdea}>
                         {t('generate_new')}
                     </button>
-                    <button className="welcome-btn" onClick={() => setScreen('welcome')}>
+                    <button className="welcome-btn" onClick={handleResetToWelcome}>
                         {t('reset_preferences')}
                     </button>
                 </aside>
