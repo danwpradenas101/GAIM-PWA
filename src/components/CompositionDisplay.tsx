@@ -12,6 +12,7 @@ interface CompositionDisplayProps {
     onCopy: () => void
     onSave: () => void
     onOpenBeats: () => void
+    onGenerateNew: () => void
 }
 
 export const CompositionDisplay: React.FC<CompositionDisplayProps> = ({
@@ -23,6 +24,7 @@ export const CompositionDisplay: React.FC<CompositionDisplayProps> = ({
     onCopy,
     onSave,
     onOpenBeats,
+    onGenerateNew,
 }) => {
     const [copied, setCopied] = useState(false)
     const { t } = useTranslation()
@@ -69,17 +71,20 @@ export const CompositionDisplay: React.FC<CompositionDisplayProps> = ({
             <div className={styles.header}>
                 <h2>{t('composition.title')}</h2>
                 <div className={styles.buttons}>
-                    <button onClick={onOpenBeats} className={styles.beatBtn} title={t('beats')}>
-                        {t('beats')}
-                    </button>
-                    <button onClick={onRegeneratePitches} className={styles.regenerateBtn} title={t('pitches_btn')}>
-                        {t('pitches_btn')}
+                    <button onClick={onSave} className={styles.saveBtn}>
+                        {t('save')}
                     </button>
                     <button onClick={handleCopy} className={`${styles.copyBtn} ${copied ? styles.copied : ''}`}>
                         {copied ? t('copied') : t('copy')}
                     </button>
-                    <button onClick={onSave} className={styles.saveBtn}>
-                        {t('save')}
+                    <button onClick={onGenerateNew} className={styles.generateBtn}>
+                        {t('generate_new')}
+                    </button>
+                    <button onClick={onRegeneratePitches} className={styles.regenerateBtn} title={t('pitches_btn')}>
+                        {t('pitches_btn')}
+                    </button>
+                    <button onClick={onOpenBeats} className={styles.beatBtn} title={t('beats')}>
+                        {t('beats')}
                     </button>
                 </div>
             </div>

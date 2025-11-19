@@ -100,6 +100,20 @@ function AppContent() {
         setCurrentIdea(idea)
     }
 
+    const applyParameterChanges = () => {
+        if (!currentIdea) {
+            generateNewIdea()
+            return
+        }
+        // Update current idea with new parameters while keeping selected pitches if still valid
+        const newIdea = generateCompositionIdea(config)
+        const updatedIdea = {
+            ...newIdea,
+            timestamp: Date.now()
+        }
+        setCurrentIdea(updatedIdea)
+    }
+
     const handleRegeneratePitches = () => {
         if (!currentIdea) return
         const [num, pitches] = selectRandomPitches(currentIdea.params.num_pitches, currentIdea.params.allow_repeats, config)
@@ -118,12 +132,10 @@ function AppContent() {
         })
     }
 
-    const handleCopyOutput = () => {
-        if (!currentIdea) return
-
-        const lookupValue = (val: string | string[]): string => {
+    const createLookupValue = () => {
+        return (val: string | string[]): string => {
             if (Array.isArray(val)) {
-                return val.map(v => lookupValue(v)).join(', ')
+                return val.map(v => createLookupValue()(v)).join(', ')
             }
             const s = String(val)
             // Search translated config lists for a match and return the translated label if found
@@ -141,7 +153,12 @@ function AppContent() {
             // fallback to raw value
             return s
         }
+    }
 
+    const handleCopyOutput = () => {
+        if (!currentIdea) return
+
+        const lookupValue = createLookupValue()
         const output = `${t('label.key')}: ${lookupValue(currentIdea.params.key)}
 ${t('label.tempo')}: ${currentIdea.params.tempo} BPM
 ${t('label.time_signature')}: ${lookupValue(currentIdea.params.time_signature)}
@@ -157,7 +174,30 @@ ${currentIdea.pitches.join(', ')}`
 
     const handleSaveComposition = async () => {
         if (!currentIdea) return
+
+        // Save to IndexedDB as before
         await saveComposition(currentIdea)
+
+        // Also download as text file
+        const lookupValue = createLookupValue()
+        const output = `${t('label.key')}: ${lookupValue(currentIdea.params.key)}
+${t('label.tempo')}: ${currentIdea.params.tempo} BPM
+${t('label.time_signature')}: ${lookupValue(currentIdea.params.time_signature)}
+${t('label.instrumentation')}: ${lookupValue(currentIdea.params.instrumentation)}
+${t('label.mood')}: ${lookupValue(currentIdea.params.mood)}
+${t('label.style')}: ${lookupValue(currentIdea.params.style)}
+
+${t('label.pitches')}:
+${currentIdea.pitches.join(', ')}`
+
+        const blob = new Blob([output], { type: 'text/plain' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `gaim-idea-${Date.now()}.txt`
+        a.click()
+        URL.revokeObjectURL(url)
+
         alert(t('composition_saved'))
     }
 
@@ -251,8 +291,8 @@ ${currentIdea.pitches.join(', ')}`
                         onOpenConfig={() => setScreen('config')}
                     />
 
-                    <button className="new-btn" onClick={generateNewIdea}>
-                        {t('generate_new')}
+                    <button className="new-btn" onClick={applyParameterChanges}>
+                        {t('apply_changes')}
                     </button>
                 </aside>
 
@@ -267,6 +307,7 @@ ${currentIdea.pitches.join(', ')}`
                             onCopy={handleCopyOutput}
                             onSave={handleSaveComposition}
                             onOpenBeats={handleOpenBeats}
+                            onGenerateNew={generateNewIdea}
                         />
                     ) : (
                         <div className="empty-state">

@@ -57,6 +57,15 @@ button {
     background: #d97706;
 }
 
+.generateBtn {
+    background: var(--primary);
+    color: white;
+}
+
+.generateBtn:hover {
+    background: var(--primary-dark);
+}
+
 .copyBtn {
     background: var(--btn-muted-bg);
     color: var(--btn-muted-fg);

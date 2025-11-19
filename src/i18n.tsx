@@ -8,6 +8,7 @@ const translations: Record<Lang, Record<string, string>> = {
         'app.subtitle': 'Random Music Ideas Generator',
         'manage_lists': 'Manage Lists (advanced)',
         'generate_new': '✨ Generate New',
+        'apply_changes': '⚙️ Apply Changes',
         'reset_preferences': '↻ Back to Start',
         'empty_state': 'Click "Generate New" to create a composition idea',
 
@@ -100,6 +101,7 @@ const translations: Record<Lang, Record<string, string>> = {
         'app.subtitle': 'Generador Aleatorio de Ideas Musicales',
         'manage_lists': 'Administrar Listas (avanzado)',
         'generate_new': '✨ Generar Nuevo',
+        'apply_changes': '⚙️ Aplicar Cambios',
         'reset_preferences': '↻ Volver al Inicio',
         'empty_state': 'Haga clic en "Generar Nuevo" para crear una idea de composición',
 
