@@ -5,7 +5,7 @@ import { ParametersPanel } from './components/ParametersPanel'
 import { CompositionDisplay } from './components/CompositionDisplay'
 import { BeatMaker } from './components/BeatMaker'
 import { ConfigurationScreen } from './components/ConfigurationScreen'
-import { generateCompositionIdea, selectRandomPitches, generateRhythmPattern, CompositionIdea, RhythmPattern, CompositionParams } from './utils/gaim'
+import { generateCompositionIdea, generateCompositionWithPreservedParams, selectRandomPitches, generateRhythmPattern, CompositionIdea, RhythmPattern, CompositionParams } from './utils/gaim'
 import { DEFAULT_CONFIG, GAIMConfig } from './utils/config'
 import { saveComposition, saveConfig, getConfig, saveRhythm } from './utils/storage'
 import { exportToMIDI } from './utils/midi'
@@ -105,12 +105,12 @@ function AppContent() {
             generateNewIdea()
             return
         }
-        // Update current idea with new parameters while keeping selected pitches if still valid
-        const newIdea = generateCompositionIdea(config)
-        const updatedIdea = {
-            ...newIdea,
-            timestamp: Date.now()
-        }
+        // Generate new idea while preserving current parameter values for selected parameters
+        const updatedIdea = generateCompositionWithPreservedParams(
+            config,
+            currentIdea.params,
+            selectedParams
+        )
         setCurrentIdea(updatedIdea)
     }
 

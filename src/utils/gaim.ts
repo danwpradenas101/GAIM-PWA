@@ -147,6 +147,68 @@ export function generateCompositionIdea(config: GAIMConfig): CompositionIdea {
     }
 }
 
+export function generateCompositionWithPreservedParams(
+    config: GAIMConfig,
+    currentParams: CompositionParams,
+    selectedParams: Record<string, boolean>
+): CompositionIdea {
+    // Create new params, preserving current values for selected parameters
+    const newParams: CompositionParams = { ...currentParams }
+
+    // Only randomize parameters that are NOT currently selected/visible
+    if (!selectedParams['key']) {
+        newParams.key = randomKey(config)
+    }
+    if (!selectedParams['tempo']) {
+        newParams.tempo = randomTempo(config)
+    }
+    if (!selectedParams['time_signature']) {
+        newParams.time_signature = randomTimeSignature(config)
+    }
+    if (!selectedParams['mood']) {
+        newParams.mood = randomMood(config)
+    }
+    if (!selectedParams['style']) {
+        newParams.style = randomStyle(config)
+    }
+    if (!selectedParams['instrumentation']) {
+        newParams.instrumentation = randomInstrumentation(config)
+    }
+    if (!selectedParams['composer']) {
+        newParams.composer = randomComposer(config)
+    }
+    if (!selectedParams['adjective']) {
+        newParams.adjective = randomAdjective(config)
+    }
+    if (!selectedParams['pitch_usage']) {
+        newParams.pitch_usage = randomPitchUsage(config)
+    }
+
+    // For pitches, if the pitch controls are not selected, randomize both num_pitches and allow_repeats
+    // If they are selected, use the current values to regenerate pitches
+    let numPitches: number, pitches: string[]
+    if (!selectedParams['pitches']) {
+        // Randomize pitch settings
+        [numPitches, pitches] = selectRandomPitches(undefined, false, config)
+        newParams.num_pitches = numPitches
+        newParams.allow_repeats = false
+    } else {
+        // Use current pitch settings
+        [numPitches, pitches] = selectRandomPitches(
+            newParams.num_pitches,
+            newParams.allow_repeats,
+            config
+        )
+    }
+
+    return {
+        params: newParams,
+        pitches,
+        is_dodecafonic: numPitches === 12 && !newParams.allow_repeats,
+        timestamp: Date.now(),
+    }
+}
+
 export function generateRhythmPattern(
     timeSignature: string = '4/4',
     measures: number = 2,
