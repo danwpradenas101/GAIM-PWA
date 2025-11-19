@@ -81,19 +81,7 @@
     flex-direction: column;
 }
 
-.lists-btn {
-    padding: 10px 14px;
-    border: none;
-    border-radius: 8px;
-    background: var(--secondary);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
 
-.lists-btn:hover {
-    opacity: 0.95
-}
 
 .empty-state {
     display: flex;

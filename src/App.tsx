@@ -5,14 +5,13 @@ import { ParametersPanel } from './components/ParametersPanel'
 import { CompositionDisplay } from './components/CompositionDisplay'
 import { BeatMaker } from './components/BeatMaker'
 import { ConfigurationScreen } from './components/ConfigurationScreen'
-import { ListsEditor } from './components/ListsEditor'
 import { generateCompositionIdea, selectRandomPitches, generateRhythmPattern, CompositionIdea, RhythmPattern, CompositionParams } from './utils/gaim'
 import { DEFAULT_CONFIG, GAIMConfig } from './utils/config'
 import { saveComposition, saveConfig, getConfig, saveRhythm } from './utils/storage'
 import { exportToMIDI } from './utils/midi'
 import './App.css'
 
-type AppScreen = 'welcome' | 'main' | 'beats' | 'config' | 'lists'
+type AppScreen = 'welcome' | 'main' | 'beats' | 'config'
 
 function AppContent() {
     const [screen, setScreen] = useState<AppScreen>('welcome')
@@ -168,17 +167,7 @@ ${currentIdea.pitches.join(', ')}`
         )
     }
 
-    if (screen === 'lists') {
-        return (
-            <div className="app-container">
-                <ListsEditor
-                    config={displayedConfig}
-                    onSave={handleSaveConfig}
-                    onClose={() => setScreen('main')}
-                />
-            </div>
-        )
-    }
+
 
     return (
         <div className="app-container">
@@ -203,9 +192,7 @@ ${currentIdea.pitches.join(', ')}`
                         onChange={handleParamChange}
                         onOpenConfig={() => setScreen('config')}
                     />
-                    <button className="lists-btn" onClick={() => setScreen('lists')}>
-                        {t('manage_lists')}
-                    </button>
+
                     <button className="new-btn" onClick={generateNewIdea}>
                         {t('generate_new')}
                     </button>
