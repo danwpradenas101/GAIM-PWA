@@ -122,9 +122,17 @@
 }
 
 @media (max-width: 768px) {
+    .app-container {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
     .main-layout {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
+        height: auto;
+        min-height: 100vh;
     }
 
     .sidebar {
@@ -159,6 +167,7 @@
 
     .content {
         min-height: 60vh;
+        overflow: visible;
     }
 }
 
