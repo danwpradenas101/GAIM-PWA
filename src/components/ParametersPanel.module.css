@@ -157,11 +157,32 @@
 }
 
 @media (max-width: 768px) {
+    .content {
+        padding: 12px;
+        gap: 12px;
+    }
+
     .multiSelect {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 6px;
     }
 
     .pitchControls {
         flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .group label {
+        font-size: 12px;
+    }
+
+    .select,
+    .numberInput {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .checkbox span {
+        font-size: 12px;
     }
 }

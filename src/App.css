@@ -124,19 +124,22 @@
 @media (max-width: 768px) {
     .main-layout {
         grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
     }
 
     .sidebar {
         border-right: none;
         border-bottom: 1px solid var(--border);
-        max-height: 200px;
-        overflow-y: auto;
+        max-height: none;
+        min-height: auto;
+        overflow-y: visible;
         padding: 16px;
+        display: block;
     }
 
     .sidebar-header {
         padding-bottom: 12px;
-        margin-bottom: 0;
+        margin-bottom: 12px;
     }
 
     .sidebar-header h1 {
@@ -151,15 +154,24 @@
     .welcome-btn {
         padding: 10px 12px;
         font-size: 13px;
+        margin-top: 8px;
+    }
+
+    .content {
+        min-height: 60vh;
     }
 }
 
 @media (max-width: 480px) {
     .sidebar {
-        max-height: 150px;
+        padding: 12px;
     }
 
     .sidebar-header h1 {
         font-size: 20px;
+    }
+
+    .sidebar-header {
+        margin-bottom: 8px;
     }
 }
