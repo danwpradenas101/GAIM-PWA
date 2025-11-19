@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.content {
+    background: var(--bg);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: var(--shadow-lg);
+}
+
+.content h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--fg);
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--gray-500);
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox input {
+    margin-right: 10px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.label {
+    font-size: 14px;
+    color: var(--fg);
+}
+
+.buttonGroup {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.secondaryBtn {
+    flex: 1;
+    padding: 10px 16px;
+    background: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.secondaryBtn:hover {
+    background: #8b63f6;
+}
+
+.button {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.button:hover {
+    background: var(--primary-dark);
+}
+
+.button:active {
+    transform: scale(0.98);
+}

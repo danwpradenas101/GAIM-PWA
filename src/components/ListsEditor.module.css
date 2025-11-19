@@ -1,0 +1,147 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--bg);
+    border-radius: 8px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 220px;
+    border-right: 1px solid var(--panel-border);
+    background: var(--panel-bg);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+.listBtn {
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    color: var(--fg);
+}
+
+.listBtn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.editorArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 12px;
+}
+
+.textarea {
+    flex: 1;
+    width: 100%;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 12px;
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    background: var(--panel-bg);
+    color: var(--fg);
+    resize: vertical;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.saveBtn,
+.exportBtn,
+.importBtn,
+.cancelBtn {
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.saveBtn {
+    background: var(--primary);
+    color: white
+}
+
+.exportBtn {
+    background: var(--secondary);
+    color: white
+}
+
+.importBtn {
+    background: var(--warning);
+    color: white
+}
+
+.cancelBtn {
+    background: var(--btn-muted-bg);
+    color: var(--btn-muted-fg)
+}
+
+.newListForm {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.newListInput {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--panel-border);
+    background: var(--bg);
+    color: var(--fg);
+    box-sizing: border-box;
+}
+
+.newListInput::placeholder {
+    color: var(--gray-500);
+}
+
+.createListBtn {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.createListBtn:hover {
+    background: var(--primary-dark);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none
+    }
+}
