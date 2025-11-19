@@ -84,7 +84,7 @@ export const ConfigurationScreen: React.FC<ConfigurationScreenProps> = ({
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h2>{t('config.title')}</h2>
+                <h2>{t('manage_lists')}</h2>
                 <button onClick={onClose} className={styles.closeBtn}>✕</button>
             </div>
 

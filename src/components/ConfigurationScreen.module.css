@@ -40,7 +40,7 @@
 
 .tabs {
     display: flex;
-    gap: 0;
+    gap: 4px;
     border-bottom: 1px solid var(--border);
     overflow-x: auto;
     padding: 0 16px;
@@ -55,8 +55,10 @@
     font-weight: 500;
     color: var(--gray-500);
     border-bottom: 2px solid transparent;
+    border-radius: 6px 6px 0 0;
     transition: all 0.2s;
     white-space: nowrap;
+    margin-bottom: 2px;
 }
 
 .tab:hover {
@@ -66,6 +68,7 @@
 .tab.active {
     color: var(--primary);
     border-bottom-color: var(--primary);
+    background: var(--gray-50);
 }
 
 .content {
@@ -212,7 +215,8 @@
 
 @media (max-width: 768px) {
     .tabs {
-        padding: 0;
+        padding: 0 8px;
+        gap: 2px;
     }
 
     .tab {
