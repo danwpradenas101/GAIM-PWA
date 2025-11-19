@@ -75,6 +75,27 @@
     background: var(--gray-400);
 }
 
+.home-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: var(--btn-muted-bg);
+    color: var(--btn-muted-fg);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-right: 4px;
+}
+
+.home-btn:hover {
+    background: var(--gray-400);
+    transform: scale(1.05);
+}
+
 .content {
     overflow: hidden;
     display: flex;

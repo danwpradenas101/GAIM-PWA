@@ -235,6 +235,9 @@ ${currentIdea.pitches.join(', ')}`
                                 <p style={{ margin: 0 }}>{t('app.subtitle')}</p>
                             </div>
                             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                <button onClick={handleResetToWelcome} className="home-btn" title={t('reset_preferences')}>
+                                    🏠
+                                </button>
                                 <button onClick={() => setLang('en')} style={{ opacity: lang === 'en' ? 1 : 0.6 }}>EN</button>
                                 <button onClick={() => setLang('es')} style={{ opacity: lang === 'es' ? 1 : 0.6 }}>ES</button>
                             </div>
@@ -250,9 +253,6 @@ ${currentIdea.pitches.join(', ')}`
 
                     <button className="new-btn" onClick={generateNewIdea}>
                         {t('generate_new')}
-                    </button>
-                    <button className="welcome-btn" onClick={handleResetToWelcome}>
-                        {t('reset_preferences')}
                     </button>
                 </aside>
 
