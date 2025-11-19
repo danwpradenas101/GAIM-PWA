@@ -211,13 +211,45 @@ const staticTranslations: Record<Lang, Partial<any>> = {
     }
 }
 
+// Static translations for config arrays - includes base items that should be translated
+const baseConfigItems: Record<string, string[]> = {
+    instruments: ['Piano', 'Strings', 'Synth', 'Guitar', 'Drums', 'Brass', 'Winds', 'Vocals', 'Harp', 'Percussion'],
+    moods: ['Uplifting', 'Melancholic', 'Energetic', 'Calm', 'Dramatic', 'Playful', 'Dark', 'Mysterious', 'Bright', 'Tense', 'Nostalgic', 'Ethereal', 'Chaotic', 'Serene'],
+    styles: ['Jazz', 'Rock', 'Blues', 'Folk', 'World', 'Funk', 'Pop', 'Classical', 'Electronic', 'Ambient'],
+    composers: ['Bach', 'Mozart', 'Beethoven', 'Chopin', 'Debussy', 'Stravinsky', 'Miles Davis', 'John Coltrane', 'The Beatles', 'Joni Mitchell', 'Nina Simone', 'Herbie Hancock', 'Radiohead', 'Ludovico Einaudi'],
+    adjectives: ['bright', 'dark', 'warm', 'cold', 'sparse', 'dense', 'harsh', 'smooth', 'angular', 'flowing', 'haunting', 'uplifting', 'intense', 'playful', 'mysterious', 'glassy', 'textured', 'minimal', 'lush'],
+    pitch_usage_patterns: ['Chord roots', 'Bass line', 'Melody', 'Ostinato', 'Arpeggio', 'Harmonic progression', 'Counter melody', 'Drone tones']
+}
+
 const translateConfigImpl = (cfg: any, lang: Lang) => {
+    // If language is English, just return the config as-is
+    if (lang === 'en') return cfg
+
     const translated = { ...cfg }
     const stat = staticTranslations[lang] || {}
+
+    // For Spanish, merge static translations with user additions
     for (const k of Object.keys(stat)) {
-        if (k in cfg) {
-            // only replace array fields
-            translated[k] = (stat as any)[k]
+        if (k in cfg && Array.isArray(cfg[k])) {
+            const staticItems = (stat as any)[k] || []
+            const userItems = cfg[k] || []
+            const baseItems = baseConfigItems[k] || []
+
+            // Start with static translations
+            const merged = [...staticItems]
+
+            // Add user items that aren't already in the base English items
+            for (const userItem of userItems) {
+                const isBaseItem = baseItems.includes(userItem)
+                const alreadyIncluded = merged.includes(userItem)
+
+                // If it's not a base item (so it's user-added) and not already included, add it
+                if (!isBaseItem && !alreadyIncluded) {
+                    merged.push(userItem)
+                }
+            }
+
+            translated[k] = merged
         }
     }
     return translated
