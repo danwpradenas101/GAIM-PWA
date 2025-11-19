@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # GAIM PWA - Generate AI Music Composition Ideas
 
 A modern Progressive Web App version of GAIM, now completely web-based and accessible offline on any platform (Windows, macOS, Linux, Android, iOS, and more).
@@ -329,3 +330,7 @@ The PWA version is recommended for:
 ---
 
 **Built with ❤️ for composers and musicians everywhere**
+=======
+# GAIM-PWA
+G.A.I.M, or Random Musical Ideas Generator is a tool made to trigger creativity with lots of parameters. Aims to be simple but flexible and as complete as anyone might need. Customizable and usable in any device, any time, online or offline. Although the idea comes from a single human, the whole app was put together by Copilot, so thanks everyone!
+>>>>>>> 04e8836380adc33b3abfbf821b7fc7d67c8efba7
